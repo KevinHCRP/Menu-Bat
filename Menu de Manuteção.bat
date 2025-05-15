@@ -1,205 +1,156 @@
 @echo off
-color 0C
+title Menu de Manutencao de Micro do HC By [ K ]
 
-title Menu de Manutecao de Micro By [K]
-
-:: Verifica se o script está sendo executado como administrador
-openfiles >nul 2>&1
-if %errorlevel% neq 0 (
-	cls
-	echo.
-	echo [=============================================================]
-	echo [#########                                           #########]
-	echo [#########              MENU PRINCIPAL               #########]
-	echo [#########                                           #########]
-	echo [=============================================================]
-	echo.
-	echo      O script nao esta rodando com administrador,
-	echo      tentando reiniciar como administrador.
-	echo.
-	echo [=============================================================]
-	echo.
-	powershell -Command "Start-Process '%~f0' -Verb runAs"
-    exit /b
-)
-
-##################################################################################################################################################
 :menu
-
+color 0C
 cls
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########              MENU PRINCIPAL               #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
 echo.
-echo        1. Ativar o Windows e Office (Online).
+echo            1. Ativar o Windows e Office (Online).
 echo.
-echo        2. Ativar o WinRAR.
+echo            2. Apagar informacoes do Google Chrome.
 echo.
-echo        3. Atualizar aplicativos do Windows (Winget).
+echo            3. Atualizar data e hora via 10.165.1.250.
 echo.
-echo        4. Menu Xbox GameBar.
+echo            4. Ferramentas do Sistema (DISM e CheckDisk).
 echo.
-echo        5. Menu completo do botao direto Windows 11.
+echo            5. Aplicativos (F-Secure e GLPI Agent).
 echo.
-echo        6. Restaura visualizador de imagens do Windows 10.
+echo            6. Sair
 echo.
-echo        7. Menu do MPO (Multi-Plane Overlay).
+echo [==========================================================]
 echo.
-echo        8. Verificar Integridade do Sistema (DISM e SFC).
-echo.
-echo        9. Verificar Disco (chkdsk).
-echo.
-echo [=============================================================]
-echo.
-echo.
-choice /c 1234567890 /n /m ">>>Digite o numero da opcao desejada, ou 0 p/ Sair: "
+choice /c 123456 /n /m ">>>Digite o numero da opcao desejada, ou 6 p/ Sair: "
 
 rem Usando a escolha do usuario
 set _el=%errorlevel%
 
 if %_el%==1 goto ativar_windows
-if %_el%==2 goto ativa_winrar
-if %_el%==3 goto atualizar_app_windows
-if %_el%==4 goto menu_remove_xbox
-if %_el%==5 goto botao_direitow11
-if %_el%==6 goto visualizador_win10
-if %_el%==7 goto menu_mpo
-if %_el%==8 goto ver_integridade_sistema
-if %_el%==9 goto ver_disco
-if %_el%==10 goto sair
+if %_el%==2 goto apagar_informacoes_chrome
+if %_el%==3 goto atualiza_hora_admin
+if %_el%==4 goto menu_sistema
+if %_el%==5 goto menu_aplicativos
+if %_el%==6 goto sair
 
 rem Caso a opcao seja invalida
 echo Opcao invalida. Tente novamente.
 pause
 goto menu
 
-##################################################################################################################################################
-:ativar_windows
-
+:menu_sistema
 cls
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########   Ativando o Windows via PowerShell...    #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo [==========================================================]
+echo                ###   FERRAMENTAS DO SISTEMA   ###
+echo [==========================================================]
 echo.
-
-:: Comando PowerShell para baixar e executar o script
-powershell -Command "irm https://massgrave.dev/get | iex"
-
-goto menu
-
-##################################################################################################################################################
-:ativa_winrar
-
-cls
+echo            1. Verificar integridade do sistema.
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########            Ativando o WinRAR              #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo            2. Verificar disco (chkdsk).
 echo.
+echo            3. Executar ambas verificacoes em sequencia.
 echo.
+echo            4. Limpar spooler de impressao.
+echo.
+echo            5. Voltar ao menu principal.
+echo.
+echo [==========================================================]
+echo.
+choice /c 12345 /n /m ">>>Digite o numero da opcao desejada, ou 5 p/ Voltar: "
 
-:: Criar o arquivo rarreg.key com o conteúdo especificado
-echo RAR registration data> "%ProgramFiles%\WinRAR\rarreg.key"
-echo WinRAR>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo Unlimited Company License>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo UID=4b914fb772c8376bf571>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo 6412212250f5711ad072cf351cfa39e2851192daf8a362681bbb1d>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo cd48da1d14d995f0bbf960fce6cb5ffde62890079861be57638717>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo 7131ced835ed65cc743d9777f2ea71a8e32c7e593cf66794343565>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo b41bcf56929486b8bcdac33d50ecf773996052598f1f556defffbd>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo 982fbe71e93df6b6346c37a3890f3c7edc65d7f5455470d13d1190>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo 6e6fb824bcf25f155547b5fc41901ad58c0992f570be1cf5608ba9>> "%ProgramFiles%\WinRAR\rarreg.key"
-echo aef69d48c864bcd72d15163897773d314187f6a9af350808719796>> "%ProgramFiles%\WinRAR\rarreg.key"
+set _el=%errorlevel%
 
-:: Exibe uma mensagem indicando que o arquivo foi criado
-echo O arquivo rarreg.key foi criado com sucesso em "%ProgramFiles%\WinRAR",
+if %_el%==1 goto verificar_integridade_admin
+if %_el%==2 goto verificar_disco_admin
+if %_el%==3 goto verificar_ambas
+if %_el%==4 goto limpa_spooler_admin
+if %_el%==5 goto menu
 
+echo Opcao invalida. Tente novamente.
 pause
-goto menu
+goto menu_sistema
 
-##################################################################################################################################################
-:ver_integridade_sistema
+:verificar_ambas
+cls
+echo.
+echo [==========================================================]
+echo        EXECUTANDO VERIFICACOES DO SISTEMA EM SEQUENCIA
+echo [==========================================================]
+echo.
+echo Primeiro: Verificando integridade do sistema...
+echo.
+pause
+call :verificar_integridade_admin_no_return
 
 cls
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########   Verificando ScanHealth do sistema...    #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo [==========================================================]
+echo        EXECUTANDO VERIFICACOES DO SISTEMA EM SEQUENCIA
+echo [==========================================================]
 echo.
+echo Segundo: Verificando disco...
+echo.
+pause
+call :verificar_disco_admin_no_return
+
+echo.
+echo Todas as verificacoes foram concluidas.
+pause
+goto menu_sistema
+
+:verificar_integridade_admin_no_return
+:: Versão da função que não retorna ao menu
+:: Verificar se o script esta rodando como administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo O script nao esta rodando com administrador.
+    echo Tentando reiniciar como administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
 
 :: Primeiro comando DISM para verificar a integridade da imagem do Windows
+echo Executando DISM /Online /Cleanup-Image /ScanHealth...
 DISM /Online /Cleanup-Image /ScanHealth
-echo.
-echo.
-
-
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########  Verificando RestoreHealth do sistema...  #########]
-echo [#########                                           #########]
-echo [=============================================================]
 echo.
 
 :: Segundo comando DISM para reparar a imagem do Windows, se necessário
+echo Executando DISM /Online /Cleanup-Image /RestoreHealth...
 DISM /Online /Cleanup-Image /RestoreHealth
-echo.
-echo.
-
-
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########   Verificando SFC /SCANNOW do sistema...  #########]
-echo [#########                                           #########]
-echo [=============================================================]
 echo.
 
 :: Comando SFC para verificar e reparar arquivos de sistema
+echo Executando sfc /scannow...
 sfc /scannow
 echo.
-echo.
 
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########   Verificacao concluida com sucesso...    #########]
-echo [#########                                           #########]
-echo [=============================================================]
-echo.
-echo.
+echo Deseja reiniciar o sistema para concluir as verificacoes?
+set /p confirm= Prosseguir? (S/N):
 
-pause
-goto menu
+if /I "%confirm%"=="S" (
+    echo O sistema sera reiniciado...
+    pause
+    shutdown /r /t 0
+)
+exit /b
 
-##################################################################################################################################################
-:ver_disco
+:verificar_disco_admin_no_return
+:: Versão da função que não retorna ao menu
+:: Verificar se o script esta rodando com privilegios de administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo O script nao esta rodando com administrador,
+    echo Tentando reiniciar como administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
 
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########    Iniciando a verificacao do disco...    #########]
-echo [#########                                           #########]
-echo [=============================================================]
-echo.
-echo.
-
-:: Informando sobre o reinicio do sistema
-echo O sistema sera reiniciado para realizar a verificacao do disco.
+echo O sistema sera reiniciado para realizar a verificacao do disco,
 set /p confirm= Deseja prosseguir? (S/N):
 
 if /I "%confirm%"=="S" (
@@ -207,6 +158,236 @@ if /I "%confirm%"=="S" (
     echo S | chkdsk C: /f /r
     echo.
     echo O sistema sera reiniciado...
+    pause
+    shutdown /r /t 0
+)
+exit /b
+
+:menu_aplicativos
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU DE APLICATIVOS   ###
+echo [==========================================================]
+echo.
+echo            1. Instalar F-Secure.
+echo.
+echo            2. Instalar GLPI Agent.
+echo.
+echo            3. Voltar ao menu principal.
+echo.
+echo [==========================================================]
+echo.
+choice /c 123 /n /m ">>>Digite o numero da opcao desejada, ou 3 p/ Voltar: "
+
+set _el=%errorlevel%
+
+if %_el%==1 goto Instalar_fsecure
+if %_el%==2 goto Instalar_glpi
+if %_el%==3 goto menu
+
+echo Opcao invalida. Tente novamente.
+pause
+goto menu_aplicativos
+
+####################################################################################################################################################################
+:ativar_windows
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo        Ativando o Windows via PowerShell...
+echo.
+echo [==========================================================]
+echo.
+
+:: Comando PowerShell para baixar e executar o script
+powershell -Command "irm https://shre.ink/eyDm | iex"
+
+goto menu
+
+
+####################################################################################################################################################################
+:apagar_informacoes_chrome
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo        Apagando informacoes do Google Chrome...
+echo.
+echo [==========================================================]
+echo.
+
+:: Verificar se o script esta sendo executado como administrador
+openfiles >nul 2>&1
+if %errorlevel% == 0 (
+    echo.
+    echo O script nao pode ser executado com privilegios de administrador,
+    pause
+    goto menu
+)
+
+:: Finalizar o Chrome.exe se estiver em execucao
+taskkill /f /im chrome.exe >nul 2>&1
+
+:: Deletar a pasta "User Data" do Chrome
+echo Deletando pasta do Chrome User Data...
+rmdir /s /q "%localappdata%\Google\Chrome\User Data"
+
+:: Iniciar o Chrome.exe com o perfil do usuário logado
+echo Iniciando o Google Chrome...
+start "" "C:\Program Files\Google\Chrome\Application\chrome.exe" --user-data-dir="%localappdata%\Google\Chrome\User Data"
+
+goto sair
+
+
+####################################################################################################################################################################
+:verificar_integridade_admin
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo             Verificando integridade do sistema...
+echo.
+echo [==========================================================]
+echo.
+
+:: Verificar se o script esta rodando como administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo O script nao esta rodando com administrador.
+    echo Tentando reiniciar como administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
+
+:: Se estiver com privilegio de administrador, prosseguir com a verificacao
+goto ver_integridade_sistema
+
+:ver_integridade_sistema
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo             Verificando integridade do sistema...
+echo.
+echo [==========================================================]
+echo.
+
+:: Primeiro comando DISM para verificar a integridade da imagem do Windows
+echo Executando DISM /Online /Cleanup-Image /ScanHealth...
+DISM /Online /Cleanup-Image /ScanHealth
+echo.
+
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo             Verificando integridade do sistema...
+echo.
+echo [==========================================================]
+echo.
+
+:: Segundo comando DISM para reparar a imagem do Windows, se necessário
+echo Executando DISM /Online /Cleanup-Image /RestoreHealth...
+DISM /Online /Cleanup-Image /RestoreHealth
+echo.
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo             Verificando integridade do sistema...
+echo.
+echo [==========================================================]
+echo.
+
+:: Comando SFC para verificar e reparar arquivos de sistema
+echo Executando sfc /scannow...
+sfc /scannow
+echo.
+echo.
+
+echo Deseja reiniciar o sistema para concluir as verificacoes,
+set /p confirm= Prosseguir? (S/N):
+
+if /I "%confirm%"=="S" (
+    echo O sistema sera reiniciado...
+    pause
+    shutdown /r /t 0
+) else (
+    goto menu
+)
+
+
+####################################################################################################################################################################
+:verificar_disco_admin
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo        Iniciando a verificacao do disco com CHKDSK...
+echo.
+echo [==========================================================]
+echo.
+
+:: Verificar se o script esta rodando com privilegios de administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo O script nao esta rodando com administrador,
+    echo Tentando reiniciar como administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
+
+:: Se estiver com privilegio de administrador, prosseguir com a verificacao
+goto ver_disco
+
+:ver_disco
+
+cls
+echo.
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
+echo.
+echo        Iniciando a verificacao do disco com CHKDSK...
+echo.
+echo [==========================================================]
+echo.
+
+:: Informando sobre o reinicio do sistema
+echo O sistema sera reiniciado para realizar a verificacao do disco,
+set /p confirm= Deseja prosseguir? (S/N):
+
+if /I "%confirm%"=="S" (
+    echo Executando chkdsk C: /f /r...
+    echo S | chkdsk C: /f /r
+    echo.
+    echo O sistema sera reiniciado assim que...
+    pause
     shutdown /r /t 0
 ) else (
     goto menu
@@ -215,226 +396,206 @@ if /I "%confirm%"=="S" (
 pause
 goto menu
 
-##################################################################################################################################################
-:atualizar_app_windows
+
+####################################################################################################################################################################
+:limpa_spooler_admin
 
 cls
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########      Atualizando os aplicativos...        #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
 echo.
+echo               Limpando Spooler de impressao,
+echo.
+echo [==========================================================]
 echo.
 
-:: Atualiza todos os aplicativos instalados, incluindo os desconhecidos, usando o winget
-winget upgrade --all --include-unknown
+:: Verificar se o script esta rodando com privilegios de administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo O script nao esta rodando com administrador,
+    echo Tentando reiniciar como administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
 
-:: Mensagem de sucesso
-echo.
-echo Todos os aplicativos foram atualizados com sucesso,
-pause
-color 0C
-goto menu
+echo Interrompendo o Spooler
+net stop spooler /y
 
-##################################################################################################################################################
-:menu_remove_xbox
+echo Acessando a pasta de impressoras
+cd %systemroot%\system32\spool\PRINTERS
 
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########               Menu Xbox                   #########]
-echo [#########                                           #########]
-echo [=============================================================]
-echo.
-echo                  1. Remover o XboxGameBar.
-echo.
-echo                  2. Restaura o XboxGameBar.
-echo.
-echo [=============================================================]
-echo.
-echo.
-choice /c 123 /n /m ">>>Digite o numero da opcao desejada, ou 3 p/ Sair: "
+echo Deletando os arquivos SHD
+del /f /s *.shd
 
-set _el=%errorlevel%
+echo Deletando os arquivos SPL
+del /f /s *.spl
 
-if %_el%==1 goto xbox_0
-if %_el%==2 goto xbox_1
-if %_el%==3 goto menu
-
-rem Caso a opcao seja invalida
-goto menu_remove_xbox
-
-##################################################################################################################################################
-:xbox_0
-
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########           Removendo XboxGameBar           #########]
-echo [#########                                           #########]
-echo [=============================================================]
-echo.
-echo.
-reg add HKCR\ms-gamebar /f /ve /d URL:ms-gamebar 2>&1 >''
-
-reg add HKCR\ms-gamebar /f /v "URL Protocol" /d " " 2>&1 >''
-
-reg add HKCR\ms-gamebar /f /v "NoOpenWith" /d " " 2>&1 >''
-
-reg add HKCR\ms-gamebar\shell\open\command /f /ve /d "`"$env:SystemRoot\System32\systray.exe`"" 2>&1 >''
-
-reg add HKCR\ms-gamebarservices /f /ve /d URL:ms-gamebarservices 2>&1 >''
-
-reg add HKCR\ms-gamebarservices /f /v "URL Protocol" /d " " 2>&1 >''
-
-reg add HKCR\ms-gamebarservices /f /v "NoOpenWith" /d " " 2>&1 >''
-
-reg add HKCR\ms-gamebarservices\shell\open\command /f /ve /d "`"$env:SystemRoot\System32\systray.exe`"" 2>&1 >''
-
-echo Xbox Game Bar removido e Game DVR desabilitado com sucesso,
-
+echo Iniciando o Spooler
+net start spooler
 pause
 goto menu
 
-##################################################################################################################################################
-:xbox_1
+
+####################################################################################################################################################################
+:atualiza_hora_admin
 
 cls
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########          Restaurando XboxGameBar          #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
 echo.
+echo        Atualizando a hora via servidor: 10.165.1.250,
 echo.
-reg add HKCR\ms-gamebar /f /ve /d "URL:ms-gamebar"
+echo [==========================================================]
+echo.
 
-reg delete HKCR\ms-gamebar /f /v "NoOpenWith"
+:: Verificar se o script esta rodando com privilegios de administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo O script nao esta rodando com administrador.
+    echo Tentando reiniciar como administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
 
-reg add HKCR\ms-gamebar /f /v "URL Protocol" /d ""
+:: Verificar se o servico Windows Time (w32time) está rodando
+echo Verificando o status do servico Windows Time...
+sc query w32time | find "RUNNING" >nul
+if %errorlevel% neq 0 (
+    echo.
+    echo O servico Windows Time nao esta iniciado. Iniciando o servico...
+    net start w32time
+)
 
-reg add HKCR\ms-gamebarservices /f /ve /d "URL:ms-gamebarservices"
+:: Atualizando a hora com o servidor NTP
+echo.
+echo Configurando o servidor NTP para sincronizacao...
+w32tm /config /manualpeerlist:"10.165.1.250" /syncfromflags:manual /reliable:YES /update
 
-reg delete HKCR\ms-gamebar\shell /f
+:: Forcando a sincronizacao do tempo
+echo.
+echo Sincronizando a hora com o servidor NTP...
+w32tm /resync
 
-reg delete HKCR\ms-gamebarservices /f /v "NoOpenWith"
-
-reg delete HKCR\ms-gamebarservices\shell /f
-
-echo Xbox Game Bar reativado e Game DVR habilitado com sucesso,
-
+echo.
+echo A hora foi atualizada com sucesso,
 pause
 goto menu
 
-##################################################################################################################################################
-:botao_direitow11
+
+####################################################################################################################################################################
+:Instalar_fsecure
 
 cls
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########          Ativando botao direito           #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
 echo.
+echo                   Instalando o FSECURE,
+echo.
+echo [==========================================================]
 echo.
 
-REM Habilitar menu do botao direito completo
-reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
-echo.
-echo Menu do botao direito completo ativado com sucesso,
+:: Verificar se o script esta rodando com privilegios de administrador
+net session >nul 2>&1
+if %errorlevel% neq 0 (
+    echo.
+    echo O script nao esta rodando com administrador.
+    echo Tentando reiniciar como administrador...
+    powershell -Command "Start-Process '%~f0' -Verb runAs"
+    exit /b
+)
+
+@echo off
+SETLOCAL
+
+REM Define o URL do arquivo MSI
+SET "URL=http://10.165.23.226/FSECURE.msi"
+
+REM Define o caminho onde o arquivo será salvo
+SET "FILE=FSECURE.msi"
+
+REM Baixa o arquivo usando PowerShell
+powershell -command "Invoke-WebRequest -Uri '%URL%' -OutFile '%FILE%'"
+
+REM Verifica se o download foi bem-sucedido
+IF EXIST "%FILE%" (
+    REM Executa o instalador com privilégios de administrador
+    start /wait msiexec /i "%FILE%" /quiet /norestart
+    echo Instalacao concluida,
+) ELSE (
+    echo Falha ao baixar o arquivo.
+)
+
+REM Limpa o arquivo após a instalação
+DEL "%FILE%"
+
+ENDLOCAL
 pause
-goto menu
 
-##################################################################################################################################################
-:visualizador_win10
+goto menu_aplicativos
+
+####################################################################################################################################################################
+:Instalar_glpi
 
 cls
 echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########          Ativando visualizador            #########]
-echo [#########                                           #########]
-echo [=============================================================]
+echo [==========================================================]
+echo                ###   MENU PRINCIPAL   ###
+echo [==========================================================]
 echo.
+echo                  Instalando o GLPI Agent,
+echo.
+echo [==========================================================]
 echo.
 
-regedit /s Visualizador_de_imagens_W10.reg
-echo Visualizador de imagem do Windows 10 re-ativado com sucesso,
+setlocal enabledelayedexpansion
+
+:: Configurações
+set origem="\\10.165.23.226\arquivos\SCRIPTS\GLPI_Agent"
+set destino="C:\GLPI_Agent"
+set arquivo_instalador="%destino%\glpiagentinstall.bat"
+
+:: Verifica se a pasta de origem existe
+if not exist %origem% (
+    echo.
+    echo ERRO: Pasta de origem não encontrada!
+    echo Verifique o caminho: %origem%
+    echo Ou a conexão com o servidor 10.165.23.226
+    pause
+    exit /b
+)
+
+:: Cria a estrutura de pastas de destino
+if not exist "C:\GLPI_Agent" mkdir "C:\GLPI_Agent"
+if not exist %destino% mkdir %destino%
+
+:: Copia todos os arquivos e subpastas
+echo.
+echo Copiando itens de %origem% para %destino%...
+echo Por favor aguarde...
+xcopy %origem% %destino% /E /H /C /I /Y /Q
+
+:: Verifica se a cópia foi bem sucedida e executa o instalador
+if exist %arquivo_instalador% (
+    echo.
+    echo Executando o instalador GLPI Agent...
+    call %arquivo_instalador%
+) else (
+    echo.
+    echo AVISO: Arquivo instalador não encontrado em:
+    echo %arquivo_instalador%
+)
+
 pause
-goto menu
+goto menu_aplicativos
 
-##################################################################################################################################################
-:menu_mpo
-
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########               Menu do MPO                 #########]
-echo [#########                                           #########]
-echo [=============================================================]
-echo.
-echo      1. Desativar o MPO (Melhora performace placa de video).
-echo.
-echo      2. Restaura o MPO.
-echo.
-echo [=============================================================]
-echo.
-echo.
-choice /c 123 /n /m ">>>Digite o numero da opcao desejada, ou 3 p/ Sair: "
-
-set _el=%errorlevel%
-
-if %_el%==1 goto mpo_0
-if %_el%==2 goto mpo_1
-if %_el%==3 goto menu
-
-rem Caso a opcao seja invalida
-goto menu_mpo
-
-##################################################################################################################################################
-:mpo_0
-
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########             Desativando MPO               #########]
-echo [#########                                           #########]
-echo [=============================================================]
-echo.
-echo.
-reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Dwm" /v OverlayTestMode /t REG_DWORD /d 5 /f
-echo.
-echo MPO desabilitado,
-pause
-goto menu
-
-##################################################################################################################################################
-:mpo_1
-
-cls
-echo.
-echo [=============================================================]
-echo [#########                                           #########]
-echo [#########              Ativando MPO                 #########]
-echo [#########                                           #########]
-echo [=============================================================]
-echo.
-echo.
-reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Dwm" /v OverlayTestMode /f
-echo.
-echo MPO habilitado,
-pause
-goto menu
-
-##################################################################################################################################################
+####################################################################################################################################################################
 :sair
-
 exit
